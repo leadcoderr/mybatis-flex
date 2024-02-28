@@ -84,7 +84,7 @@ public interface ChainQuery<T> {
      * 获取多条数据，返回的数据为 asType 类型。
      *
      * @param asType 接收数据类型
-     *               @param <R>    接收数据类型
+     * @param <R>    接收数据类型
      * @return 数据列表
      */
     <R> List<R> listAs(Class<R> asType);
@@ -102,7 +102,7 @@ public interface ChainQuery<T> {
      *
      * @param page   分页对象
      * @param asType 接收数据类型
-     *               @param <R>    接收数据类型
+     * @param <R>    接收数据类型
      * @return 分页数据
      */
     <R> Page<R> pageAs(Page<R> page, Class<R> asType);

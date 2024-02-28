@@ -92,7 +92,7 @@ public class RowSqlProvider {
         // 这个必须 new 一个 LinkedHashSet，因为 keepModifyAttrs 会清除 row 所有的 modifyAttrs
         Set<String> modifyAttrs = new LinkedHashSet<>(RowCPI.getInsertAttrs(rows.get(0)));
 
-        //sql: INSERT INTO `tb_table`(`name`, `sex`) VALUES (?, ?),(?, ?),(?, ?)
+        // sql: INSERT INTO `tb_table`(`name`, `sex`) VALUES (?, ?),(?, ?),(?, ?)
         String sql = DialectFactory.getDialect().forInsertBatchWithFirstRowColumns(schema, tableName, rows);
 
         Object[] values = new Object[]{};
@@ -156,7 +156,7 @@ public class RowSqlProvider {
         QueryWrapper queryWrapper = ProviderUtil.getQueryWrapper(params);
         CPI.setFromIfNecessary(queryWrapper, schema, tableName);
 
-        //优先构建 sql，再构建参数
+        // 优先构建 sql，再构建参数
         String sql = DialectFactory.getDialect().forDeleteByQuery(queryWrapper);
         Object[] valueArray = CPI.getValueArray(queryWrapper);
         ProviderUtil.setSqlArgs(params, valueArray);
@@ -195,7 +195,7 @@ public class RowSqlProvider {
         QueryWrapper queryWrapper = ProviderUtil.getQueryWrapper(params);
         CPI.setFromIfNecessary(queryWrapper, schema, tableName);
 
-        //优先构建 sql，再构建参数
+        // 优先构建 sql，再构建参数
         String sql = DialectFactory.getDialect().forUpdateByQuery(queryWrapper, data);
 
         Object[] modifyValues = RowCPI.obtainModifyValues(data);
@@ -296,7 +296,7 @@ public class RowSqlProvider {
         QueryWrapper queryWrapper = ProviderUtil.getQueryWrapper(params);
         CPI.setFromIfNecessary(queryWrapper, schema, tableName);
 
-        //优先构建 sql，再构建参数
+        // 优先构建 sql，再构建参数
         String sql = DialectFactory.getDialect().forSelectByQuery(queryWrapper);
 
         Object[] valueArray = CPI.getValueArray(queryWrapper);

@@ -62,7 +62,7 @@ class ToManyRelation<SelfEntity> extends AbstractRelation<SelfEntity> {
                 }
                 String[] splitValues = ((String) targetValue).split(selfValueSplitBy);
                 for (String splitValue : splitValues) {
-                    //优化分割后的数据类型(防止在数据库查询时候出现隐式转换)
+                    // 优化分割后的数据类型(防止在数据库查询时候出现隐式转换)
                     newTargetValues.add(ConvertUtil.convert(splitValue, targetFieldWrapper.getFieldType()));
                 }
             }
@@ -114,7 +114,7 @@ class ToManyRelation<SelfEntity> extends AbstractRelation<SelfEntity> {
                 }
 
                 Class<?> fieldType = relationFieldWrapper.getFieldType();
-                //map
+                // map
                 if (Map.class.isAssignableFrom(fieldType)) {
                     Class<?> wrapType = getMapWrapType(fieldType);
                     Map map = (Map) ClassUtil.newInstance(wrapType);
@@ -128,7 +128,7 @@ class ToManyRelation<SelfEntity> extends AbstractRelation<SelfEntity> {
                     }
                     relationFieldWrapper.set(map, selfEntity);
                 }
-                //集合
+                // 集合
                 else {
                     Class<?> wrapType = MapperUtil.getCollectionWrapType(fieldType);
                     Collection collection = (Collection) ClassUtil.newInstance(wrapType);
@@ -136,7 +136,7 @@ class ToManyRelation<SelfEntity> extends AbstractRelation<SelfEntity> {
                         Object targetValue = targetFieldWrapper.get(targetObject);
                         if (targetValue != null && targetMappingValues.contains(targetValue.toString())) {
                             if (onlyQueryValueField) {
-                                //仅绑定某个字段
+                                // 仅绑定某个字段
                                 collection.add(FieldWrapper.of(targetObject.getClass(), valueField).get(targetObject));
                             } else {
                                 collection.add(targetObject);

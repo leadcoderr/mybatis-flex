@@ -66,7 +66,7 @@ public class JacksonTypeHandler extends BaseJsonTypeHandler<Object> {
 
 
     public JavaType getJavaType() {
-        if (javaType == null){
+        if (javaType == null) {
             javaType = getObjectMapper().getTypeFactory().constructCollectionType((Class<? extends Collection>) propertyType, genericType);
         }
         return javaType;

@@ -204,7 +204,7 @@ public class AuditMessage implements Serializable {
                 queryParams.add(object);
             }
         } catch (SQLException e) {
-            //ignore
+            // ignore
         }
     }
 

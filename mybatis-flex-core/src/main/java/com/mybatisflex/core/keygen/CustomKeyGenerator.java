@@ -92,7 +92,7 @@ public class CustomKeyGenerator implements KeyGenerator {
 
     @Override
     public void processAfter(Executor executor, MappedStatement ms, Statement stmt, Object parameter) {
-        //do nothing
+        // do nothing
     }
 
     private void setValue(MetaObject metaParam, String property, Object value) {

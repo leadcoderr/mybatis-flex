@@ -15,11 +15,7 @@
  */
 package com.mybatisflex.core;
 
-import com.mybatisflex.annotation.InsertListener;
-import com.mybatisflex.annotation.KeyType;
-import com.mybatisflex.annotation.Listener;
-import com.mybatisflex.annotation.SetListener;
-import com.mybatisflex.annotation.UpdateListener;
+import com.mybatisflex.annotation.*;
 import com.mybatisflex.core.datasource.FlexDataSource;
 import com.mybatisflex.core.dialect.DbType;
 import com.mybatisflex.core.exception.FlexAssert;
@@ -210,10 +206,11 @@ public class FlexGlobalConfig {
 
     /**
      * 查找支持该 {@code entityClass} 的监听器
+     *
      * @param entityClass 实体class
      * @param listenerMap 监听器map
+     * @param <T>         监听器类型
      * @return 符合条件的监听器
-     * @param <T> 监听器类型
      */
     public <T extends Listener> List<T> findSupportedListeners(Class<?> entityClass, Map<Class<?>, T> listenerMap) {
         return listenerMap.entrySet().stream()

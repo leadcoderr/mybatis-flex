@@ -15,7 +15,6 @@
  */
 package com.mybatisflex.core.mybatis;
 
-import com.mybatisflex.core.util.StringUtil;
 import org.apache.ibatis.annotations.AutomapConstructor;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.binding.MapperMethod.ParamMap;

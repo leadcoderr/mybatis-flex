@@ -100,7 +100,7 @@ public class QueryTable implements CloneSupport<QueryTable> {
         if (StringUtil.isNotBlank(alias) && StringUtil.isNotBlank(table.alias) && (Objects.equals(alias, table.alias))) {
             return false;
         }
-        //比较对象都有tableDef标记,就用标记比对, 否则就用名称比对
+        // 比较对象都有tableDef标记,就用标记比对, 否则就用名称比对
         if (tableDefHashCode != 0 && table.tableDefHashCode != 0) {
             return tableDefHashCode == table.tableDefHashCode;
         }

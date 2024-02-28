@@ -75,6 +75,7 @@ public abstract class QueryModel<T extends QueryModel<T>> {
         queryWrapper().select(queryColumns);
         return (T) this;
     }
+
     @SafeVarargs
     public final <E> T select(LambdaGetter<E>... columns) {
         queryWrapper().select(columns);
@@ -344,8 +345,9 @@ public abstract class QueryModel<T extends QueryModel<T>> {
         queryWrapper().groupBy(columns);
         return (T) this;
     }
+
     @SafeVarargs
-    public final  <E> T groupBy(LambdaGetter<E>... columns) {
+    public final <E> T groupBy(LambdaGetter<E>... columns) {
         queryWrapper().groupBy(columns);
         return (T) this;
     }

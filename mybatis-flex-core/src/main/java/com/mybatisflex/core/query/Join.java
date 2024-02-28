@@ -100,11 +100,11 @@ public class Join implements CloneSupport<Join> {
     }
 
     public String toSql(List<QueryTable> queryTables, IDialect dialect) {
-        //left join, right join,  inner join ...
+        // left join, right join,  inner join ...
         StringBuilder sql = new StringBuilder(type);
         sql.append(queryTable.toSql(dialect));
 
-        //left join xxx as xxx2 on xxx2.id = xxx3.other
+        // left join xxx as xxx2 on xxx2.id = xxx3.other
         List<QueryTable> newQueryTables = new ArrayList<>(queryTables);
         newQueryTables.add(queryTable);
         sql.append(SqlConsts.ON).append(on.toSql(newQueryTables, dialect));

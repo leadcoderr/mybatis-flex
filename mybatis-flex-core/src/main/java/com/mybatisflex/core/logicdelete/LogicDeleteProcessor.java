@@ -44,8 +44,9 @@ public interface LogicDeleteProcessor {
 
     /**
      * 用于构建通过 {@link QueryWrapper} 查询数据时的内容。
-     *  @param queryWrapper 条件构造器
-     * @param tableInfo    表信息
+     *
+     * @param queryWrapper   条件构造器
+     * @param tableInfo      表信息
      * @param joinTableAlias join table 的别名
      */
     void buildQueryCondition(QueryWrapper queryWrapper, TableInfo tableInfo, String joinTableAlias);

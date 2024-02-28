@@ -115,7 +115,6 @@ public class RowMapperInvoker {
     }
 
 
-
     public <M> int[] executeBatch(int totalSize, int batchSize, Class<M> mapperClass, BiConsumer<M, Integer> consumer) {
         int[] results = new int[totalSize];
         try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, true)) {
@@ -189,12 +188,15 @@ public class RowMapperInvoker {
     public List<Row> selectAll(String schema, String tableName) {
         return execute(mapper -> mapper.selectAll(schema, tableName));
     }
+
     public Map selectFirstAndSecondColumnsAsMapByQuery(String schema, String tableName, QueryWrapper queryWrapper) {
         return execute(mapper -> mapper.selectFirstAndSecondColumnsAsMapByQuery(schema, tableName, queryWrapper));
     }
+
     public Map selectFirstAndSecondColumnsAsMap(String sql, Object... args) {
         return execute(mapper -> mapper.selectFirstAndSecondColumnsAsMap(sql, args));
     }
+
     public Object selectObjectByQuery(String schema, String tableName, QueryWrapper queryWrapper) {
         return execute(mapper -> mapper.selectObjectByQuery(schema, tableName, queryWrapper));
     }

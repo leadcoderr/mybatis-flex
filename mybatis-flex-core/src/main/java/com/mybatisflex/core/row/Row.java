@@ -34,7 +34,7 @@ import java.util.function.Predicate;
 
 public class Row extends LinkedHashMap<String, Object> implements UpdateWrapper<Row> {
 
-    //主键，多个主键用英文逗号隔开
+    // 主键，多个主键用英文逗号隔开
     private Set<RowKey> primaryKeys;
 
     public static Row of(String key, Object value) {

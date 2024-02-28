@@ -301,20 +301,20 @@ public class RelationManager {
         try {
             relations.forEach(relation -> {
 
-                //ignore
+                // ignore
                 if (ignoreRelations != null && (ignoreRelations.contains(relation.getSimpleName())
                     || ignoreRelations.contains(relation.getName()))) {
                     return;
                 }
 
-                //only query
+                // only query
                 if (queryRelations != null && !queryRelations.isEmpty()
                     && !queryRelations.contains(relation.getSimpleName())
                     && !queryRelations.contains(relation.getName())) {
                     return;
                 }
 
-                //注解配置的数据源
+                // 注解配置的数据源
                 String configDsKey = relation.getDataSource();
                 if (StringUtil.isBlank(configDsKey) && currentDsKey != null) {
                     configDsKey = currentDsKey;
@@ -328,7 +328,7 @@ public class RelationManager {
                     Set<Object> targetValues;
                     List<Row> mappingRows = null;
 
-                    //通过中间表关联查询
+                    // 通过中间表关联查询
                     if (relation.isRelationByMiddleTable()) {
 
                         Set selfFieldValues = relation.getSelfFieldValues(entities);
@@ -358,7 +358,7 @@ public class RelationManager {
                             }
                         }
                     }
-                    //通过外键字段关联查询
+                    // 通过外键字段关联查询
                     else {
                         targetValues = relation.getSelfFieldValues(entities);
                     }
@@ -367,15 +367,15 @@ public class RelationManager {
                         return;
                     }
 
-                    //仅绑定字段:As目标实体类 不进行字段绑定:As映射类型
+                    // 仅绑定字段:As目标实体类 不进行字段绑定:As映射类型
                     QueryWrapper queryWrapper = relation.buildQueryWrapper(targetValues);
                     List<?> targetObjectList = mapper.selectListByQueryAs(queryWrapper, relation.isOnlyQueryValueField() ? relation.getTargetEntityClass() : relation.getMappingType());
                     if (CollectionUtil.isNotEmpty(targetObjectList)) {
 
-                        //递归查询
+                        // 递归查询
                         doQueryRelations(mapper, targetObjectList, currentDepth + 1, maxDepth, ignoreRelations, queryRelations);
 
-                        //进行内存 join
+                        // 进行内存 join
                         relation.join(entities, targetObjectList, mappingRows);
                     }
                 } finally {

@@ -27,7 +27,7 @@ class ToOneRelation<SelfEntity> extends AbstractRelation<SelfEntity> {
     public ToOneRelation(String selfField, String targetSchema, String targetTable, String targetField, String valueField,
                          String joinTable, String joinSelfColumn, String joinTargetColumn,
                          String dataSource, Class<SelfEntity> selfEntityClass, Field relationField,
-                         String extraCondition,String[] selectColumns) {
+                         String extraCondition, String[] selectColumns) {
         super(selfField, targetSchema, targetTable, targetField, valueField,
             joinTable, joinSelfColumn, joinTargetColumn,
             dataSource, selfEntityClass, relationField,
@@ -56,7 +56,7 @@ class ToOneRelation<SelfEntity> extends AbstractRelation<SelfEntity> {
                     Object targetValue = targetFieldWrapper.get(targetObject);
                     if (targetValue != null && targetMappingValue.equals(targetValue.toString())) {
                         if (onlyQueryValueField) {
-                            //仅绑定某个字段
+                            // 仅绑定某个字段
                             relationFieldWrapper.set(FieldWrapper.of(targetObject.getClass(), valueField).get(targetObject), selfEntity);
                         } else {
                             relationFieldWrapper.set(targetObject, selfEntity);

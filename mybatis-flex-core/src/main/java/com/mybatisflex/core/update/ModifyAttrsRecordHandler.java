@@ -45,7 +45,7 @@ class ModifyAttrsRecordHandler implements MethodHandler {
 
             String property = StringUtil.firstCharToLowerCase(originalMethod.getName().substring(3));
 
-            //标识 @Column(ignore=true) 的字段，不去更新
+            // 标识 @Column(ignore=true) 的字段，不去更新
             FieldWrapper fw = FieldWrapper.of(originalMethod.getDeclaringClass(), property);
             if (fw != null && fw.isIgnore()) {
                 return proxyMethod.invoke(self, args);

@@ -86,12 +86,12 @@ abstract class AbstractRelation<SelfEntity> {
         this.selfField = ClassUtil.getFirstField(entityClass, field -> field.getName().equals(selfField));
         this.selfFieldWrapper = FieldWrapper.of(entityClass, selfField);
 
-        //以使用者注解配置为主
+        // 以使用者注解配置为主
         this.targetTableInfo = StringUtil.isBlank(targetTable) ? TableInfoFactory.ofEntityClass(relationFieldWrapper.getMappingType()) : TableInfoFactory.ofTableName(targetTable);
         this.targetSchema = targetTableInfo != null ? targetTableInfo.getSchema() : targetSchema;
         this.targetTable = targetTableInfo != null ? targetTableInfo.getTableName() : targetTable;
 
-        //当指定了 valueField 的时候，一般是 String Integer 等基本数据类型
+        // 当指定了 valueField 的时候，一般是 String Integer 等基本数据类型
         this.targetEntityClass = (StringUtil.isNotBlank(valueField) && targetTableInfo != null) ? targetTableInfo.getEntityClass() : relationFieldWrapper.getMappingType();
 
         this.targetField = ClassUtil.getFirstField(targetEntityClass, field -> field.getName().equals(targetField));
@@ -104,14 +104,14 @@ abstract class AbstractRelation<SelfEntity> {
             : column(targetTable, targetTableInfo.getColumnByProperty(this.targetField.getName()));
 
         if (onlyQueryValueField) {
-            //仅绑定字段时只需要查询关联列和该字段列即可
+            // 仅绑定字段时只需要查询关联列和该字段列即可
             this.selectColumns = new String[]{conditionColumn.getName(), targetTableInfo != null ? targetTableInfo.getColumnByProperty(this.valueField) : StringUtil.camelToUnderline(this.valueField)};
         } else {
             if (ArrayUtil.isNotEmpty(selectColumns)) {
                 if (ArrayUtil.contains(selectColumns, conditionColumn.getName())) {
                     this.selectColumns = selectColumns;
                 } else {
-                    //需要追加 conditionColumn，因为进行内存 join 的时候，需要用到这个内容进行对比
+                    // 需要追加 conditionColumn，因为进行内存 join 的时候，需要用到这个内容进行对比
                     this.selectColumns = ArrayUtil.concat(selectColumns, new String[]{conditionColumn.getName()});
                 }
             }
@@ -400,7 +400,7 @@ abstract class AbstractRelation<SelfEntity> {
      * @param queryWrapper 查询条件
      */
     public void customizeQueryWrapper(QueryWrapper queryWrapper) {
-        //do thing
+        // do thing
     }
 
 

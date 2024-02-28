@@ -47,7 +47,7 @@ public class TransactionContext {
             try {
                 cursor.close();
             } catch (IOException e) {
-                //ignore
+                // ignore
             } finally {
                 CURSOR_HOLDER.remove();
             }

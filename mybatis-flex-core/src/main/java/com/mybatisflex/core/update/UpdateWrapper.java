@@ -40,8 +40,8 @@ public interface UpdateWrapper<T> extends PropertySetter<UpdateWrapper<T>>, Seri
     default UpdateWrapper<T> set(String property, Object value, boolean isEffective) {
         if (isEffective) {
             if (value instanceof QueryWrapper
-                    || value instanceof QueryColumn
-                    || value instanceof QueryCondition) {
+                || value instanceof QueryColumn
+                || value instanceof QueryCondition) {
                 getUpdates().put(property, new RawValue(value));
             } else {
                 getUpdates().put(property, value);
@@ -54,8 +54,8 @@ public interface UpdateWrapper<T> extends PropertySetter<UpdateWrapper<T>>, Seri
     default UpdateWrapper<T> set(QueryColumn property, Object value, boolean isEffective) {
         if (isEffective) {
             if (value instanceof QueryWrapper
-                    || value instanceof QueryColumn
-                    || value instanceof QueryCondition) {
+                || value instanceof QueryColumn
+                || value instanceof QueryCondition) {
                 getUpdates().put(property.getName(), new RawValue(value));
             } else {
                 getUpdates().put(property.getName(), value);
@@ -68,8 +68,8 @@ public interface UpdateWrapper<T> extends PropertySetter<UpdateWrapper<T>>, Seri
     default <E> UpdateWrapper<T> set(LambdaGetter<E> property, Object value, boolean isEffective) {
         if (isEffective) {
             if (value instanceof QueryWrapper
-                    || value instanceof QueryColumn
-                    || value instanceof QueryCondition) {
+                || value instanceof QueryColumn
+                || value instanceof QueryCondition) {
                 getUpdates().put(LambdaUtil.getFieldName(property), new RawValue(value));
             } else {
                 getUpdates().put(LambdaUtil.getFieldName(property), value);

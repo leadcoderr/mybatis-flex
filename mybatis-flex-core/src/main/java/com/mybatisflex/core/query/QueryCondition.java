@@ -37,13 +37,13 @@ public class QueryCondition implements CloneSupport<QueryCondition> {
     protected Object value;
     protected boolean effective = true;
 
-    //当前条件的上一个条件
+    // 当前条件的上一个条件
     protected QueryCondition prev;
 
-    //当前条件的下一个条件
+    // 当前条件的下一个条件
     protected QueryCondition next;
 
-    //两个条件直接的连接符
+    // 两个条件直接的连接符
     protected SqlConnector connector;
 
     /**
@@ -185,33 +185,33 @@ public class QueryCondition implements CloneSupport<QueryCondition> {
 
     public String toSql(List<QueryTable> queryTables, IDialect dialect) {
         StringBuilder sql = new StringBuilder();
-        //检测是否生效
+        // 检测是否生效
         if (checkEffective()) {
             QueryCondition prevEffectiveCondition = getPrevEffectiveCondition();
             if (prevEffectiveCondition != null && this.connector != null) {
                 sql.append(this.connector);
             }
-            //列
+            // 列
             sql.append(getColumn().toConditionSql(queryTables, dialect));
 
-            //逻辑符号
+            // 逻辑符号
             sql.append(logic);
 
-            //值（或者问号）
+            // 值（或者问号）
             if (value instanceof QueryColumn) {
                 sql.append(((QueryColumn) value).toConditionSql(queryTables, dialect));
             }
-            //子查询
+            // 子查询
             else if (value instanceof QueryWrapper) {
                 sql.append(SqlConsts.BRACKET_LEFT)
                     .append(dialect.buildSelectSql((QueryWrapper) value))
                     .append(SqlConsts.BRACKET_RIGHT);
             }
-            //原生sql
+            // 原生sql
             else if (value instanceof RawQueryCondition) {
                 sql.append(((RawQueryCondition) value).getContent());
             }
-            //正常查询，构建问号
+            // 正常查询，构建问号
             else {
                 appendQuestionMark(sql);
             }
@@ -246,20 +246,20 @@ public class QueryCondition implements CloneSupport<QueryCondition> {
 
 
     protected void appendQuestionMark(StringBuilder sqlBuilder) {
-        //noinspection StatementWithEmptyBody
+        // noinspection StatementWithEmptyBody
         if (SqlConsts.IS_NULL.equals(logic)
             || SqlConsts.IS_NOT_NULL.equals(logic)
             || value instanceof QueryColumn
             || value instanceof QueryWrapper
             || value instanceof RawQueryCondition) {
-            //do nothing
+            // do nothing
         }
 
-        //between, not between
+        // between, not between
         else if (SqlConsts.BETWEEN.equals(logic) || SqlConsts.NOT_BETWEEN.equals(logic)) {
             sqlBuilder.append(SqlConsts.AND_PLACEHOLDER);
         }
-        //in, not in
+        // in, not in
         else if (SqlConsts.IN.equals(logic) || SqlConsts.NOT_IN.equals(logic)) {
             int paramsCount = calculateValueArrayCount();
             sqlBuilder.append(SqlConsts.BRACKET_LEFT);

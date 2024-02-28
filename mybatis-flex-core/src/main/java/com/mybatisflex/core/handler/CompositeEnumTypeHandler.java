@@ -27,9 +27,7 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CompositeEnumTypeHandler<E extends Enum<E>> implements TypeHandler<E> {
 

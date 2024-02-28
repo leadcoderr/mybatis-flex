@@ -57,11 +57,11 @@ public class TransactionalManager {
 
 
     public static <T> T exec(Supplier<T> supplier, Propagation propagation, boolean withResult) {
-        //上一级事务的id，支持事务嵌套
+        // 上一级事务的id，支持事务嵌套
         String currentXID = TransactionContext.getXID();
         try {
             switch (propagation) {
-                //若存在当前事务，则加入当前事务，若不存在当前事务，则创建新的事务
+                // 若存在当前事务，则加入当前事务，若不存在当前事务，则创建新的事务
                 case REQUIRED:
                     if (currentXID != null) {
                         return supplier.get();
@@ -70,12 +70,12 @@ public class TransactionalManager {
                     }
 
 
-                //若存在当前事务，则加入当前事务，若不存在当前事务，则已非事务的方式运行
+                    // 若存在当前事务，则加入当前事务，若不存在当前事务，则已非事务的方式运行
                 case SUPPORTS:
                     return supplier.get();
 
 
-                //若存在当前事务，则加入当前事务，若不存在当前事务，则已非事务的方式运行
+                // 若存在当前事务，则加入当前事务，若不存在当前事务，则已非事务的方式运行
                 case MANDATORY:
                     if (currentXID != null) {
                         return supplier.get();
@@ -84,12 +84,12 @@ public class TransactionalManager {
                     }
 
 
-                //始终以新事务的方式运行，若存在当前事务，则暂停（挂起）当前事务。
+                    // 始终以新事务的方式运行，若存在当前事务，则暂停（挂起）当前事务。
                 case REQUIRES_NEW:
                     return execNewTransactional(supplier, withResult);
 
 
-                //以非事务的方式运行，若存在当前事务，则暂停（挂起）当前事务。
+                // 以非事务的方式运行，若存在当前事务，则暂停（挂起）当前事务。
                 case NOT_SUPPORTED:
                     if (currentXID != null) {
                         TransactionContext.release();
@@ -97,7 +97,7 @@ public class TransactionalManager {
                     return supplier.get();
 
 
-                //以非事务的方式运行，若存在当前事务，则抛出异常。
+                // 以非事务的方式运行，若存在当前事务，则抛出异常。
                 case NEVER:
                     if (currentXID != null) {
                         throw new TransactionException("Existing transaction found for transaction marked with propagation 'never'");
@@ -105,14 +105,14 @@ public class TransactionalManager {
                     return supplier.get();
 
 
-                //暂时不支持这种事务传递方式
-                //default 为 nested 方式
+                // 暂时不支持这种事务传递方式
+                // default 为 nested 方式
                 default:
                     throw new TransactionException("Transaction manager does not allow nested transactions");
 
             }
         } finally {
-            //恢复上一级事务
+            // 恢复上一级事务
             if (currentXID != null) {
                 TransactionContext.holdXID(currentXID);
             }
@@ -135,7 +135,7 @@ public class TransactionalManager {
                     if (result instanceof Boolean && (Boolean) result) {
                         commit(xid);
                     }
-                    //null or false
+                    // null or false
                     else {
                         rollback(xid);
                     }
@@ -169,7 +169,7 @@ public class TransactionalManager {
     }
 
     private static void release(String xid, boolean commit) {
-        //先release，才能正常的进行 commit 或者 rollback.
+        // 先release，才能正常的进行 commit 或者 rollback.
         TransactionContext.release();
 
         Exception exception = null;
@@ -193,7 +193,7 @@ public class TransactionalManager {
                         try {
                             conn.close();
                         } catch (SQLException e) {
-                            //ignore
+                            // ignore
                         }
                     }
                 }

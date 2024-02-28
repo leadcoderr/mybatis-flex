@@ -25,7 +25,10 @@ import com.mybatisflex.core.query.*;
 import com.mybatisflex.core.row.Row;
 import com.mybatisflex.core.table.TableInfo;
 import com.mybatisflex.core.table.TableInfoFactory;
-import com.mybatisflex.core.util.*;
+import com.mybatisflex.core.util.ClassUtil;
+import com.mybatisflex.core.util.CollectionUtil;
+import com.mybatisflex.core.util.ConvertUtil;
+import com.mybatisflex.core.util.MapperUtil;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.builder.annotation.ProviderContext;
 import org.apache.ibatis.cursor.Cursor;
@@ -843,7 +846,7 @@ public interface BaseMapper<T> {
             }
             return MapperUtil.getLongNumber(objects);
         } finally {
-            //fixed https://github.com/mybatis-flex/mybatis-flex/issues/49
+            // fixed https://github.com/mybatis-flex/mybatis-flex/issues/49
             CPI.setSelectColumns(queryWrapper, selectColumns);
         }
     }

@@ -82,7 +82,7 @@ class ProviderUtil {
 
     public static QueryWrapper getQueryWrapper(Map params) {
         Object queryWrapper = params.get(FlexConsts.QUERY);
-        FlexAssert.notNull(queryWrapper,"queryWrapper");
+        FlexAssert.notNull(queryWrapper, "queryWrapper");
         return (QueryWrapper) queryWrapper;
     }
 

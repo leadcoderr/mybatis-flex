@@ -127,7 +127,7 @@ public abstract class Model<T extends Model<T>>
 
     @Override
     public RelationsBuilder<T> withRelations(LambdaGetter<T>... columns) {
-        if(columns != null && columns.length > 0) {
+        if (columns != null && columns.length > 0) {
             String[] array = Arrays.stream(columns)
                 .map(LambdaUtil::getFieldName)
                 .toArray(String[]::new);

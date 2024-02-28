@@ -33,7 +33,7 @@ public class MultiPrimaryKeyGenerator implements KeyGenerator, IMultiKeyGenerato
 
     private final List<KeyGenerator> keyGenerators;
 
-    //所有自增字段的名称
+    // 所有自增字段的名称
     private final String[] autoGenKeyColumnNames;
 
     public MultiPrimaryKeyGenerator(MappedStatement mappedStatement, TableInfo tableInfo, List<IdInfo> primaryKeyList) {

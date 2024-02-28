@@ -36,7 +36,7 @@ public class SqlOperators extends HashMap<String, SqlOperator> {
         return new SqlOperators();
     }
 
-    public static <T> SqlOperators of( LambdaGetter<T> getter, SqlOperator operator ) {
+    public static <T> SqlOperators of(LambdaGetter<T> getter, SqlOperator operator) {
         SqlOperators map = new SqlOperators(1);
         map.put(LambdaUtil.getFieldName(getter), operator);
         return map;

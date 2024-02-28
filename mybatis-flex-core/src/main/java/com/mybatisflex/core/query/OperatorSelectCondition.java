@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class OperatorSelectCondition extends QueryCondition {
 
-    //操作符，例如 exist, not exist
+    // 操作符，例如 exist, not exist
     private final String operator;
     private QueryWrapper queryWrapper;
 
@@ -46,7 +46,7 @@ public class OperatorSelectCondition extends QueryCondition {
     public String toSql(List<QueryTable> queryTables, IDialect dialect) {
         StringBuilder sql = new StringBuilder();
 
-        //检测是否生效
+        // 检测是否生效
         if (checkEffective()) {
             String childSql = dialect.buildSelectSql(queryWrapper);
             if (StringUtil.isNotBlank(childSql)) {

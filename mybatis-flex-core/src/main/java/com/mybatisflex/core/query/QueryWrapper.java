@@ -23,20 +23,9 @@ import com.mybatisflex.core.dialect.DialectFactory;
 import com.mybatisflex.core.table.TableDef;
 import com.mybatisflex.core.table.TableInfo;
 import com.mybatisflex.core.table.TableInfoFactory;
-import com.mybatisflex.core.util.ArrayUtil;
-import com.mybatisflex.core.util.ClassUtil;
-import com.mybatisflex.core.util.CollectionUtil;
-import com.mybatisflex.core.util.LambdaGetter;
-import com.mybatisflex.core.util.LambdaUtil;
-import com.mybatisflex.core.util.SqlUtil;
-import com.mybatisflex.core.util.StringUtil;
+import com.mybatisflex.core.util.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -671,6 +660,7 @@ public class QueryWrapper extends BaseQueryWrapper<QueryWrapper> {
         addGroupByColumns(LambdaUtil.getQueryColumn(column));
         return this;
     }
+
     public <T> QueryWrapper groupBy(LambdaGetter<T>... columns) {
         for (LambdaGetter<T> column : columns) {
             groupBy(LambdaUtil.getQueryColumn(column));
@@ -772,7 +762,7 @@ public class QueryWrapper extends BaseQueryWrapper<QueryWrapper> {
 
     public QueryWrapper orderBy(String... orderBys) {
         if (orderBys == null || orderBys.length == 0) {
-            //ignore
+            // ignore
             return this;
         }
         for (String queryOrderBy : orderBys) {
@@ -2311,7 +2301,7 @@ public class QueryWrapper extends BaseQueryWrapper<QueryWrapper> {
             }
         }
 
-        //select 子查询的参数：select * from (select ....)
+        // select 子查询的参数：select * from (select ....)
         List<Object> tableValues = null;
         List<QueryTable> queryTables = getQueryTables();
         if (CollectionUtil.isNotEmpty(queryTables)) {
@@ -2326,7 +2316,7 @@ public class QueryWrapper extends BaseQueryWrapper<QueryWrapper> {
             }
         }
 
-        //join 子查询的参数：left join (select ...)
+        // join 子查询的参数：left join (select ...)
         List<Object> joinValues = null;
         List<Join> joins = getJoins();
         if (CollectionUtil.isNotEmpty(joins)) {
@@ -2350,15 +2340,15 @@ public class QueryWrapper extends BaseQueryWrapper<QueryWrapper> {
             }
         }
 
-        //where 参数
+        // where 参数
         Object[] whereValues = WrapperUtil.getValues(whereQueryCondition);
 
-        //having 参数
+        // having 参数
         Object[] havingValues = WrapperUtil.getValues(havingQueryCondition);
 
         Object[] paramValues = ArrayUtil.concat(whereValues, havingValues);
 
-        //unions 参数
+        // unions 参数
         if (CollectionUtil.isNotEmpty(unions)) {
             for (UnionWrapper union : unions) {
                 QueryWrapper queryWrapper = union.getQueryWrapper();
@@ -2381,7 +2371,7 @@ public class QueryWrapper extends BaseQueryWrapper<QueryWrapper> {
      * 在构建 sql 的时候，需要保证 where 在 having 的前面
      */
     Object[] getJoinValueArray() {
-        //join 子查询的参数：left join (select ...)
+        // join 子查询的参数：left join (select ...)
         List<Object> joinValues = null;
         List<Join> joins = getJoins();
         if (CollectionUtil.isNotEmpty(joins)) {
@@ -2414,15 +2404,15 @@ public class QueryWrapper extends BaseQueryWrapper<QueryWrapper> {
      * 在构建 sql 的时候，需要保证 where 在 having 的前面
      */
     Object[] getConditionValueArray() {
-        //where 参数
+        // where 参数
         Object[] whereValues = WrapperUtil.getValues(whereQueryCondition);
 
-        //having 参数
+        // having 参数
         Object[] havingValues = WrapperUtil.getValues(havingQueryCondition);
 
         Object[] paramValues = ArrayUtil.concat(whereValues, havingValues);
 
-        //unions 参数
+        // unions 参数
         if (CollectionUtil.isNotEmpty(unions)) {
             for (UnionWrapper union : unions) {
                 QueryWrapper queryWrapper = union.getQueryWrapper();

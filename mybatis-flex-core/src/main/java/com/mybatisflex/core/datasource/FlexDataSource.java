@@ -207,7 +207,7 @@ public class FlexDataSource extends AbstractDataSource {
         if (dataSourceMap.size() > 1) {
             String dataSourceKey = DataSourceKey.get();
             if (StringUtil.isNotBlank(dataSourceKey)) {
-                //负载均衡 key
+                // 负载均衡 key
                 if (dataSourceKey.charAt(dataSourceKey.length() - 1) == LOAD_BALANCE_KEY_SUFFIX) {
                     String prefix = dataSourceKey.substring(0, dataSourceKey.length() - 1);
                     List<String> matchedKeys = new ArrayList<>();
@@ -224,7 +224,7 @@ public class FlexDataSource extends AbstractDataSource {
                     String randomKey = matchedKeys.get(ThreadLocalRandom.current().nextInt(matchedKeys.size()));
                     return dataSourceMap.get(randomKey);
                 }
-                //非负载均衡 key
+                // 非负载均衡 key
                 else {
                     dataSource = dataSourceMap.get(dataSourceKey);
                     if (dataSource == null) {
@@ -251,11 +251,11 @@ public class FlexDataSource extends AbstractDataSource {
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             if (ArrayUtil.contains(proxyMethods, method.getName())
                 && isTransactional()) {
-                //do nothing
+                // do nothing
                 return null;
             }
 
-            //setAutoCommit: true
+            // setAutoCommit: true
             if ("close".equalsIgnoreCase(method.getName())) {
                 resetAutoCommit(original);
             }

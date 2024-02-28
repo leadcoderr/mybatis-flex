@@ -13,13 +13,13 @@
 // *  See the License for the specific language governing permissions and
 // *  limitations under the License.
 // */
-//package com.mybatisflex.core.relation;
+// package com.mybatisflex.core.relation;
 //
-//import com.mybatisflex.core.query.QueryCondition;
+// import com.mybatisflex.core.query.QueryCondition;
 //
-//import static com.mybatisflex.core.query.QueryMethods.column;
+// import static com.mybatisflex.core.query.QueryMethods.column;
 //
-//class Condition {
+// class Condition {
 //
 //    private String column;
 //    private String logic;

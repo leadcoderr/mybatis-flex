@@ -88,7 +88,7 @@ public class StringUtil {
         if (isBlank(string)) {
             return "";
         }
-        if(Character.isUpperCase(string.charAt(0))){
+        if (Character.isUpperCase(string.charAt(0))) {
             string = string.toLowerCase();
         }
         int strLen = string.length();
@@ -110,15 +110,15 @@ public class StringUtil {
     /**
      * 删除字符串中的字符
      */
-    public static String deleteChar(String string,char deleteChar) {
+    public static String deleteChar(String string, char deleteChar) {
         if (isBlank(string)) {
             return "";
         }
         char[] chars = string.toCharArray();
         StringBuilder sb = new StringBuilder(string.length());
         for (char aChar : chars) {
-            if (aChar != deleteChar){
-               sb.append(aChar);
+            if (aChar != deleteChar) {
+                sb.append(aChar);
             }
         }
         return sb.toString();

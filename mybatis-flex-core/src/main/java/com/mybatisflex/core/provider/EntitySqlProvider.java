@@ -58,16 +58,16 @@ public class EntitySqlProvider {
 
         TableInfo tableInfo = ProviderUtil.getTableInfo(context);
 
-        //设置乐观锁版本字段的初始化数据
+        // 设置乐观锁版本字段的初始化数据
         tableInfo.initVersionValueIfNecessary(entity);
 
-        //设置租户ID
+        // 设置租户ID
         tableInfo.initTenantIdIfNecessary(entity);
 
-        //设置逻辑删除字段的出初始化数据
+        // 设置逻辑删除字段的出初始化数据
         tableInfo.initLogicDeleteValueIfNecessary(entity);
 
-        //执行 onInsert 监听器
+        // 执行 onInsert 监听器
         tableInfo.invokeOnInsertListener(entity);
 
         Object[] values = tableInfo.buildInsertSqlArgs(entity, ignoreNulls);
@@ -94,16 +94,16 @@ public class EntitySqlProvider {
 
         TableInfo tableInfo = ProviderUtil.getTableInfo(context);
 
-        //设置乐观锁版本字段的初始化数据
+        // 设置乐观锁版本字段的初始化数据
         tableInfo.initVersionValueIfNecessary(entity);
 
-        //设置租户ID
+        // 设置租户ID
         tableInfo.initTenantIdIfNecessary(entity);
 
-        //设置逻辑删除字段的出初始化数据
+        // 设置逻辑删除字段的出初始化数据
         tableInfo.initLogicDeleteValueIfNecessary(entity);
 
-        //执行 onInsert 监听器
+        // 执行 onInsert 监听器
         tableInfo.invokeOnInsertListener(entity);
 
         Object[] values = tableInfo.buildInsertSqlArgsWithPk(entity, ignoreNulls);
@@ -133,7 +133,7 @@ public class EntitySqlProvider {
             tableInfo.initTenantIdIfNecessary(entity);
             tableInfo.initLogicDeleteValueIfNecessary(entity);
 
-            //执行 onInsert 监听器
+            // 执行 onInsert 监听器
             tableInfo.invokeOnInsertListener(entity);
         }
 
@@ -232,7 +232,7 @@ public class EntitySqlProvider {
 
         TableInfo tableInfo = ProviderUtil.getTableInfo(context);
 
-        //执行 onUpdate 监听器
+        // 执行 onUpdate 监听器
         tableInfo.invokeOnUpdateListener(entity);
 
         Object[] updateValues = tableInfo.buildUpdateSqlArgs(entity, ignoreNulls, false);
@@ -263,30 +263,29 @@ public class EntitySqlProvider {
         boolean ignoreNulls = ProviderUtil.isIgnoreNulls(params);
 
         QueryWrapper queryWrapper = ProviderUtil.getQueryWrapper(params);
-        appendTableConditions(context,queryWrapper,false);
+        appendTableConditions(context, queryWrapper, false);
 
         TableInfo tableInfo = ProviderUtil.getTableInfo(context);
 
-        //执行 onUpdate 监听器
+        // 执行 onUpdate 监听器
         tableInfo.invokeOnUpdateListener(entity);
 
-        //处理逻辑删除 和 多租户等
+        // 处理逻辑删除 和 多租户等
         tableInfo.appendConditions(entity, queryWrapper);
 
-        //优先构建 sql，再构建参数
+        // 优先构建 sql，再构建参数
         String sql = DialectFactory.getDialect().forUpdateEntityByQuery(tableInfo, entity, ignoreNulls, queryWrapper);
 
         Object[] joinValueArray = CPI.getJoinValueArray(queryWrapper);
         Object[] values = tableInfo.buildUpdateSqlArgs(entity, ignoreNulls, true);
         Object[] queryParams = CPI.getConditionValueArray(queryWrapper);
 
-        Object[] paramValues = ArrayUtil.concat(joinValueArray,ArrayUtil.concat(values,queryParams));
+        Object[] paramValues = ArrayUtil.concat(joinValueArray, ArrayUtil.concat(values, queryParams));
 
         ProviderUtil.setSqlArgs(params, paramValues);
 
         return sql;
     }
-
 
 
     /**
@@ -347,7 +346,7 @@ public class EntitySqlProvider {
 
         appendTableConditions(context, queryWrapper, true);
 
-        //优先构建 sql，再构建参数
+        // 优先构建 sql，再构建参数
         String sql = DialectFactory.getDialect().forSelectByQuery(queryWrapper);
 
         Object[] values = CPI.getValueArray(queryWrapper);
@@ -370,7 +369,7 @@ public class EntitySqlProvider {
 
         appendTableConditions(context, queryWrapper, false);
 
-        //优先构建 sql，再构建参数
+        // 优先构建 sql，再构建参数
         String sql = DialectFactory.getDialect().forSelectByQuery(queryWrapper);
 
         Object[] values = CPI.getValueArray(queryWrapper);

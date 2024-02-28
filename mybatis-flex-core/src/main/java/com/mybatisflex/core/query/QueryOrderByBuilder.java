@@ -21,6 +21,7 @@ import com.mybatisflex.core.util.LambdaUtil;
 
 /**
  * 排序字段构建器
+ *
  * @author michael
  */
 @SuppressWarnings("unchecked")
@@ -34,11 +35,11 @@ public class QueryOrderByBuilder<Wrapper extends QueryWrapper> {
         this.orderByColumn = LambdaUtil.getQueryColumn(getter);
     }
 
-    public Wrapper asc(){
+    public Wrapper asc() {
         return (Wrapper) queryWrapper.orderBy(orderByColumn.asc());
     }
 
-    public Wrapper desc(){
+    public Wrapper desc() {
         return (Wrapper) queryWrapper.orderBy(orderByColumn.desc());
     }
 }

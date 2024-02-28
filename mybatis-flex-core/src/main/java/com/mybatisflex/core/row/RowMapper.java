@@ -214,7 +214,6 @@ public interface RowMapper {
     int updateEntity(@Param(FlexConsts.ENTITY) Object entity);
 
 
-
     ///////select /////
 
     /**
@@ -333,6 +332,7 @@ public interface RowMapper {
     @SelectProvider(type = RowSqlProvider.class, method = "selectListByQuery")
     Map selectFirstAndSecondColumnsAsMapByQuery(@Param(FlexConsts.SCHEMA_NAME) String schema
         , @Param(FlexConsts.TABLE_NAME) String tableName, @Param(FlexConsts.QUERY) QueryWrapper queryWrapper);
+
     /**
      * 通过 sql 查询多行数据，sql 执行的结果应该只有 1 列
      *

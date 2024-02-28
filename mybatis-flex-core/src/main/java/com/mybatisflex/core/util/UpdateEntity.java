@@ -71,7 +71,7 @@ public class UpdateEntity {
                 return Array.get(id, index);
             }
         }
-        //not array
+        // not array
         return index == 0 ? id : null;
     }
 

@@ -44,7 +44,7 @@ public class OperatorQueryCondition extends QueryCondition {
     public String toSql(List<QueryTable> queryTables, IDialect dialect) {
         StringBuilder sql = new StringBuilder();
 
-        //检测是否生效
+        // 检测是否生效
         if (checkEffective()) {
             String childSql = childCondition.toSql(queryTables, dialect);
             if (StringUtil.isNotBlank(childSql)) {

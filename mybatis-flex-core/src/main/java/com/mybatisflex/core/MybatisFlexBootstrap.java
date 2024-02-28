@@ -94,9 +94,9 @@ public class MybatisFlexBootstrap {
     public MybatisFlexBootstrap start() {
         if (started.compareAndSet(false, true)) {
 
-            FlexAssert.notNull(dataSource,"dataSource");
+            FlexAssert.notNull(dataSource, "dataSource");
 
-            //init configuration
+            // init configuration
             if (configuration == null) {
 
                 if (transactionFactory == null) {
@@ -111,10 +111,10 @@ public class MybatisFlexBootstrap {
                 configuration.setLogImpl(logImpl);
             }
 
-            //init sqlSessionFactory
+            // init sqlSessionFactory
             new FlexSqlSessionFactoryBuilder().build(configuration);
 
-            //init mappers
+            // init mappers
             if (mappers != null) {
                 mappers.forEach(configuration::addMapper);
             }

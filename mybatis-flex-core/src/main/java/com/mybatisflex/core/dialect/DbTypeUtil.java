@@ -61,7 +61,7 @@ public class DbTypeUtil {
                 Method method = dataSource.getClass().getMethod(methodName);
                 return (String) method.invoke(dataSource);
             } catch (Exception e) {
-                //ignore
+                // ignore
             }
         }
 
@@ -159,7 +159,7 @@ public class DbTypeUtil {
             return DbType.GREENPLUM;
         } else if (jdbcUrl.contains(":lealone:")) {
             return DbType.LEALONE;
-        }  else if (jdbcUrl.contains(":hive2:")) {
+        } else if (jdbcUrl.contains(":hive2:")) {
             return DbType.HIVE;
         } else {
             return DbType.OTHER;

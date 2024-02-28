@@ -25,7 +25,6 @@ import java.util.ResourceBundle;
  *
  * @author 王帅
  * @author michael
- *
  * @since 2023-07-26
  */
 public enum LocalizedFormats implements Localizable {

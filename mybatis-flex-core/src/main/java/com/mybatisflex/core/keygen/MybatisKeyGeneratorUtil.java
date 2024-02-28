@@ -41,12 +41,12 @@ public class MybatisKeyGeneratorUtil {
     public static KeyGenerator createTableKeyGenerator(TableInfo tableInfo, MappedStatement ms) {
         List<IdInfo> primaryKeyList = tableInfo.getPrimaryKeyList();
 
-        //无主键
+        // 无主键
         if (primaryKeyList == null || primaryKeyList.isEmpty()) {
             return NoKeyGenerator.INSTANCE;
         }
 
-        //多主键的
+        // 多主键的
         if (primaryKeyList.size() > 1) {
             return new MultiPrimaryKeyGenerator(ms, tableInfo, primaryKeyList);
         }
@@ -58,7 +58,7 @@ public class MybatisKeyGeneratorUtil {
     public static KeyGenerator createIdKeyGenerator(TableInfo tableInfo, MappedStatement ms, IdInfo idInfo) {
         FlexGlobalConfig flexGlobalConfig = FlexGlobalConfig.getConfig(ms.getConfiguration());
 
-        if(flexGlobalConfig == null){
+        if (flexGlobalConfig == null) {
             return NoKeyGenerator.INSTANCE;
         }
 
@@ -69,17 +69,17 @@ public class MybatisKeyGeneratorUtil {
             return NoKeyGenerator.INSTANCE;
         }
 
-        //自增主键
+        // 自增主键
         if (keyType == KeyType.Auto) {
             return Jdbc3KeyGenerator.INSTANCE;
         }
 
-        //通过 java 生成的主键
+        // 通过 java 生成的主键
         if (keyType == KeyType.Generator) {
             return new CustomKeyGenerator(ms.getConfiguration(), tableInfo, idInfo);
         }
 
-        //通过序列生成的注解
+        // 通过序列生成的注解
         String sequence = getKeyValue(idInfo, globalKeyConfig);
         if (StringUtil.isBlank(sequence)) {
             throw FlexExceptions.wrap("Please config sequence by @Id(value=\"...\") for field: %s in class: %s"
@@ -111,10 +111,10 @@ public class MybatisKeyGeneratorUtil {
         MappedStatement keyMappedStatement = msBuilder.build();
         ms.getConfiguration().addMappedStatement(keyMappedStatement);
 
-        //看到有的框架把 keyGenerator 添加到 mybatis 的当前配置里去，其实是完全没必要的
-        //因为只有在 xml 解析的时候，才可能存在多一个 MappedStatement 拥有同一个 keyGenerator 的情况
-        //当前每个方法都拥有一个自己的 keyGenerator 了，没必要添加
-        //addKeyGenerator(selectId, keyGenerator)
+        // 看到有的框架把 keyGenerator 添加到 mybatis 的当前配置里去，其实是完全没必要的
+        // 因为只有在 xml 解析的时候，才可能存在多一个 MappedStatement 拥有同一个 keyGenerator 的情况
+        // 当前每个方法都拥有一个自己的 keyGenerator 了，没必要添加
+        // addKeyGenerator(selectId, keyGenerator)
         return new SelectKeyGenerator(keyMappedStatement, isKeyBefore(idInfo, globalKeyConfig));
     }
 

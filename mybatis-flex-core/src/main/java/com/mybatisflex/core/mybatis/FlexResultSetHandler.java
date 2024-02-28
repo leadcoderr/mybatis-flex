@@ -54,7 +54,7 @@ public class FlexResultSetHandler extends FlexDefaultResultSetHandler {
     public <E> Cursor<E> handleCursorResultSets(Statement stmt) throws SQLException {
         Cursor<E> defaultCursor = super.handleCursorResultSets(stmt);
 
-        //in transaction
+        // in transaction
         if (TransactionContext.getXID() != null) {
             return new FlexCursor<>(defaultCursor);
         }

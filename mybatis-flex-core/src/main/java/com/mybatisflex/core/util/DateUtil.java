@@ -102,19 +102,19 @@ public class DateUtil {
             try {
                 return sdf.parse(dateString);
             } catch (ParseException ex) {
-                //2022-10-23 00:00:00.0
+                // 2022-10-23 00:00:00.0
                 int lastIndexOf = dateString.lastIndexOf(".");
                 if (lastIndexOf == 19) {
                     return parseDate(dateString.substring(0, lastIndexOf));
                 }
 
-                //2022-10-23 00:00:00,0
+                // 2022-10-23 00:00:00,0
                 lastIndexOf = dateString.lastIndexOf(",");
                 if (lastIndexOf == 19) {
                     return parseDate(dateString.substring(0, lastIndexOf));
                 }
 
-                //2022-10-23 00:00:00 000123
+                // 2022-10-23 00:00:00 000123
                 lastIndexOf = dateString.lastIndexOf(" ");
                 if (lastIndexOf == 19) {
                     return parseDate(dateString.substring(0, lastIndexOf));
@@ -142,19 +142,19 @@ public class DateUtil {
         try {
             return LocalDateTime.parse(dateString, dateTimeFormatter);
         } catch (Exception ex) {
-            //2022-10-23 00:00:00.0
+            // 2022-10-23 00:00:00.0
             int lastIndexOf = dateString.lastIndexOf(".");
             if (lastIndexOf == 19) {
                 return parseLocalDateTime(dateString.substring(0, lastIndexOf));
             }
 
-            //2022-10-23 00:00:00,0
+            // 2022-10-23 00:00:00,0
             lastIndexOf = dateString.lastIndexOf(",");
             if (lastIndexOf == 19) {
                 return parseLocalDateTime(dateString.substring(0, lastIndexOf));
             }
 
-            //2022-10-23 00:00:00 000123
+            // 2022-10-23 00:00:00 000123
             lastIndexOf = dateString.lastIndexOf(" ");
             if (lastIndexOf == 19) {
                 return parseLocalDateTime(dateString.substring(0, lastIndexOf));

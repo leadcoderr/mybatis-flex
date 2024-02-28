@@ -21,7 +21,8 @@ import com.mybatisflex.core.mask.MaskTypeHandler;
 import com.mybatisflex.core.util.ArrayUtil;
 import com.mybatisflex.core.util.StringUtil;
 import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.type.*;
+import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.TypeHandler;
 
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -130,22 +131,22 @@ public class ColumnInfo {
             return buildTypeHandler;
         }
 
-        //脱敏规则配置
+        // 脱敏规则配置
         else if (StringUtil.isNotBlank(maskType)) {
             if (typeHandler != null) {
-                //noinspection unchecked
+                // noinspection unchecked
                 buildTypeHandler = new CompositeMaskTypeHandler(maskType, (TypeHandler<Object>) typeHandler);
             } else {
                 buildTypeHandler = new MaskTypeHandler(maskType);
             }
         }
 
-        //用户自定义的 typeHandler
+        // 用户自定义的 typeHandler
         else if (typeHandler != null) {
             buildTypeHandler = typeHandler;
         }
 
-        //枚举
+        // 枚举
         else if (propertyType.isEnum() || ArrayUtil.contains(needGetTypeHandlerTypes, propertyType)) {
             if (configuration == null) {
                 configuration = FlexGlobalConfig.getDefaultConfig().getConfiguration();

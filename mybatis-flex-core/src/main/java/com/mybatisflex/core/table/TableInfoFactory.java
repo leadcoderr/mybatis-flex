@@ -15,15 +15,7 @@
  */
 package com.mybatisflex.core.table;
 
-import com.mybatisflex.annotation.Column;
-import com.mybatisflex.annotation.ColumnAlias;
-import com.mybatisflex.annotation.ColumnMask;
-import com.mybatisflex.annotation.Id;
-import com.mybatisflex.annotation.InsertListener;
-import com.mybatisflex.annotation.NoneListener;
-import com.mybatisflex.annotation.SetListener;
-import com.mybatisflex.annotation.Table;
-import com.mybatisflex.annotation.UpdateListener;
+import com.mybatisflex.annotation.*;
 import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.FlexGlobalConfig;
 import com.mybatisflex.core.exception.FlexExceptions;
@@ -39,46 +31,17 @@ import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.reflection.Reflector;
 import org.apache.ibatis.reflection.TypeParameterResolver;
 import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.TypeException;
-import org.apache.ibatis.type.TypeHandler;
-import org.apache.ibatis.type.TypeHandlerRegistry;
-import org.apache.ibatis.type.UnknownTypeHandler;
+import org.apache.ibatis.type.*;
 import org.apache.ibatis.util.MapUtil;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
+import java.lang.reflect.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Month;
-import java.time.OffsetDateTime;
-import java.time.OffsetTime;
-import java.time.Year;
-import java.time.YearMonth;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.chrono.JapaneseDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -221,7 +184,7 @@ public class TableInfoFactory {
         Reflector reflector = Reflectors.of(entityClass);
         tableInfo.setReflector(reflector);
 
-        //初始化表名
+        // 初始化表名
         Table table = entityClass.getAnnotation(Table.class);
         if (table != null) {
             tableInfo.setSchema(table.schema());
@@ -256,12 +219,12 @@ public class TableInfoFactory {
                 tableInfo.setDataSource(table.dataSource());
             }
         } else {
-            //默认为类名转驼峰下划线
+            // 默认为类名转驼峰下划线
             String tableName = StringUtil.camelToUnderline(entityClass.getSimpleName());
             tableInfo.setTableName(tableName);
         }
 
-        //初始化字段相关
+        // 初始化字段相关
         List<ColumnInfo> columnInfoList = new ArrayList<>();
         List<IdInfo> idInfos = new ArrayList<>();
 
@@ -270,13 +233,13 @@ public class TableInfoFactory {
         String versionColumn = null;
         String tenantIdColumn = null;
 
-        //数据插入时，默认插入数据字段
+        // 数据插入时，默认插入数据字段
         Map<String, String> onInsertColumns = new HashMap<>();
 
-        //数据更新时，默认更新内容的字段
+        // 数据更新时，默认更新内容的字段
         Map<String, String> onUpdateColumns = new HashMap<>();
 
-        //大字段列
+        // 大字段列
         Set<String> largeColumns = new LinkedHashSet<>();
 
         // 默认查询列
@@ -290,7 +253,7 @@ public class TableInfoFactory {
 
             Class<?> fieldType = reflector.getGetterType(field.getName());
 
-            //移除默认的忽略字段
+            // 移除默认的忽略字段
             boolean isIgnoreField = false;
             for (Class<?> ignoreColumnType : ignoreColumnTypes) {
                 if (ignoreColumnType.isAssignableFrom(fieldType)) {
@@ -306,10 +269,10 @@ public class TableInfoFactory {
             Column columnAnnotation = field.getAnnotation(Column.class);
 
 
-            //满足以下 3 种情况，不支持该类型的属性自动映射为字段
+            // 满足以下 3 种情况，不支持该类型的属性自动映射为字段
             if ((columnAnnotation == null || columnAnnotation.typeHandler() == UnknownTypeHandler.class) // 未配置 typeHandler
                 && !fieldType.isEnum()   // 类型不是枚举
-                && !defaultSupportColumnTypes.contains(fieldType) //默认的自动类型不包含该类型
+                && !defaultSupportColumnTypes.contains(fieldType) // 默认的自动类型不包含该类型
             ) {
                 // 忽略 集合 实体类 解析
                 if (columnAnnotation != null && columnAnnotation.ignore()) {
@@ -334,10 +297,10 @@ public class TableInfoFactory {
                 continue;
             }
 
-            //列名
+            // 列名
             String columnName = getColumnName(tableInfo.isCamelToUnderline(), field, columnAnnotation);
 
-            //逻辑删除字段
+            // 逻辑删除字段
             if ((columnAnnotation != null && columnAnnotation.isLogicDelete())
                 || columnName.equals(config.getLogicDeleteColumn())) {
                 if (logicDeleteColumn == null) {
@@ -347,7 +310,7 @@ public class TableInfoFactory {
                 }
             }
 
-            //乐观锁版本字段
+            // 乐观锁版本字段
             if ((columnAnnotation != null && columnAnnotation.version())
                 || columnName.equals(config.getVersionColumn())) {
                 if (versionColumn == null) {
@@ -357,7 +320,7 @@ public class TableInfoFactory {
                 }
             }
 
-            //租户ID 字段
+            // 租户ID 字段
             if ((columnAnnotation != null && columnAnnotation.tenantId())
                 || columnName.equals(config.getTenantColumn())) {
                 if (tenantIdColumn == null) {
@@ -382,7 +345,7 @@ public class TableInfoFactory {
                 largeColumns.add(columnName);
             }
 
-            //主键配置
+            // 主键配置
             Id id = field.getAnnotation(Id.class);
             ColumnInfo columnInfo;
             if (id != null) {
@@ -421,17 +384,17 @@ public class TableInfoFactory {
             }
 
 
-            //typeHandler 配置
+            // typeHandler 配置
             if (columnAnnotation != null && columnAnnotation.typeHandler() != UnknownTypeHandler.class) {
                 TypeHandler<?> typeHandler = null;
 
-                //集合类型，支持泛型
-                //fixed https://gitee.com/mybatis-flex/mybatis-flex/issues/I7S2YE
+                // 集合类型，支持泛型
+                // fixed https://gitee.com/mybatis-flex/mybatis-flex/issues/I7S2YE
                 if (Collection.class.isAssignableFrom(fieldType)) {
                     typeHandler = createCollectionTypeHandler(entityClass, field, columnAnnotation.typeHandler(), fieldType);
                 }
 
-                //非集合类型
+                // 非集合类型
                 else {
                     Class<?> typeHandlerClass = columnAnnotation.typeHandler();
                     Configuration configuration = config.getConfiguration();

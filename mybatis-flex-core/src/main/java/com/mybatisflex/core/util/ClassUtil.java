@@ -48,7 +48,7 @@ public class ClassUtil {
         "finalize"
     };
 
-    //proxy frameworks
+    // proxy frameworks
     private static final List<String> PROXY_CLASS_NAMES = Arrays.asList("net.sf.cglib.proxy.Factory"
         // cglib
         , "org.springframework.cglib.proxy.Factory"
@@ -65,7 +65,7 @@ public class ClassUtil {
                 return true;
             }
         }
-        //java proxy
+        // java proxy
         return Proxy.isProxyClass(clazz);
     }
 
@@ -79,9 +79,9 @@ public class ClassUtil {
             return getJdkProxySuperClass(clazz);
         }
 
-        //ControllerTest$ServiceTest$$EnhancerByGuice$$40471411#hello   -------> Guice
-        //com.demo.blog.Blog$$EnhancerByCGLIB$$69a17158  ----> CGLIB
-        //io.jboot.test.app.TestAppListener_$$_jvstb9f_0 ------> javassist
+        // ControllerTest$ServiceTest$$EnhancerByGuice$$40471411#hello   -------> Guice
+        // com.demo.blog.Blog$$EnhancerByCGLIB$$69a17158  ----> CGLIB
+        // io.jboot.test.app.TestAppListener_$$_jvstb9f_0 ------> javassist
         final String name = clazz.getName();
         if (name.contains(ENHANCER_BY) || name.contains(JAVASSIST_BY)) {
             return (Class<T>) clazz.getSuperclass();

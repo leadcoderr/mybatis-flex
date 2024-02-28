@@ -200,11 +200,12 @@ public interface MapperQueryChain<T> extends ChainQuery<T> {
 
     /**
      * 使用 Relations Query 的方式进行关联查询。
+     *
      * @param columns 需要关联的字段
      * @return Relations Query 查询
      */
     default RelationsBuilder<T> withRelations(LambdaGetter<T>... columns) {
-        if(columns != null && columns.length > 0) {
+        if (columns != null && columns.length > 0) {
             String[] array = Arrays.stream(columns)
                 .map(LambdaUtil::getFieldName)
                 .toArray(String[]::new);

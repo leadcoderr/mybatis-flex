@@ -139,7 +139,7 @@ public class FlexConfiguration extends Configuration {
     @Override
     public MappedStatement getMappedStatement(String id) {
         MappedStatement ms = super.getMappedStatement(id);
-        //动态 resultsMap，方法名称为：selectListByQuery
+        // 动态 resultsMap，方法名称为：selectListByQuery
         Class<?> asType = MappedStatementTypes.getCurrentType();
         if (asType != null) {
             return MapUtil.computeIfAbsent(dynamicMappedStatementCache, id + ":" + asType.getName(),
@@ -153,27 +153,27 @@ public class FlexConfiguration extends Configuration {
 
     @Override
     public void addMappedStatement(MappedStatement ms) {
-        //替换 RowMapper.insert 的主键生成器
-        //替换 RowMapper.insertBatchWithFirstRowColumns 的主键生成器
+        // 替换 RowMapper.insert 的主键生成器
+        // 替换 RowMapper.insertBatchWithFirstRowColumns 的主键生成器
         if (ms.getId().startsWith("com.mybatisflex.core.row.RowMapper.insert")) {
             ms = replaceRowKeyGenerator(ms);
         }
-        //entity insert methods
+        // entity insert methods
         else if (StringUtil.endsWithAny(ms.getId(), "insert", FlexConsts.METHOD_INSERT_BATCH)
             && ms.getKeyGenerator() == NoKeyGenerator.INSTANCE) {
             ms = replaceEntityKeyGenerator(ms);
         }
-        //entity select
+        // entity select
         else if (StringUtil.endsWithAny(ms.getId(), "selectOneById", "selectListByIds"
             , "selectListByQuery", "selectCursorByQuery")) {
             ms = replaceResultMap(ms, getTableInfo(ms));
         } else {
             List<ResultMap> resultMaps = ms.getResultMaps();
-            //根据 resultMap 里面的 class 进行判断
+            // 根据 resultMap 里面的 class 进行判断
             for (ResultMap resultMap : resultMaps) {
-                //获取结果的类型
+                // 获取结果的类型
                 Class<?> clazz = resultMap.getType();
-                //判断是否为表实体类
+                // 判断是否为表实体类
                 if (clazz.getDeclaredAnnotation(Table.class) != null && isDefaultResultMap(ms.getId(), resultMap.getId())) {
                     TableInfo tableInfo = TableInfoFactory.ofEntityClass(clazz);
                     ms = replaceResultMap(ms, tableInfo);
@@ -240,7 +240,7 @@ public class FlexConfiguration extends Configuration {
      */
     private MappedStatement replaceRowKeyGenerator(MappedStatement ms) {
 
-        //执行原生 SQL，不需要为其设置主键生成器
+        // 执行原生 SQL，不需要为其设置主键生成器
         if (ms.getId().endsWith("BySql")) {
             return ms;
         }
@@ -289,7 +289,7 @@ public class FlexConfiguration extends Configuration {
             return ms;
         }
 
-        //批量插入
+        // 批量插入
         if (ms.getId().endsWith(FlexConsts.METHOD_INSERT_BATCH)) {
             keyGenerator = new MultiEntityKeyGenerator(keyGenerator);
         }
@@ -343,7 +343,7 @@ public class FlexConfiguration extends Configuration {
             }
         }
 
-        //不支持泛型类添加
+        // 不支持泛型类添加
         if (!isGenericInterface) {
             super.addMapper(type);
         }

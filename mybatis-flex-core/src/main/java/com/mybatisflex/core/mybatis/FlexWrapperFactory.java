@@ -49,9 +49,9 @@ public class FlexWrapperFactory implements ObjectWrapperFactory {
     @Override
     public ObjectWrapper getWrapperFor(MetaObject metaObject, Object object) {
         if (Map.class.isAssignableFrom(object.getClass())) {
-            if (object.getClass() == Row.class){
-                //取消 row 的 user_name 转换为 userName，否则再次保存时无法进行保存
-                //https://github.com/mybatis-flex/mybatis-flex/issues/244
+            if (object.getClass() == Row.class) {
+                // 取消 row 的 user_name 转换为 userName，否则再次保存时无法进行保存
+                // https://github.com/mybatis-flex/mybatis-flex/issues/244
                 return new MapWrapper(metaObject, (Map<String, Object>) object);
             }
             return new FlexMapWrapper(metaObject, (Map<String, Object>) object);

@@ -29,7 +29,6 @@ import org.apache.ibatis.reflection.ExceptionUtil;
 
 import javax.sql.DataSource;
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -56,10 +55,10 @@ public class MapperInvocationHandler implements InvocationHandler {
         boolean needClearDsKey = false;
         boolean needClearDbType = false;
         try {
-            //获取用户动态指定，由用户指定数据源，则应该有用户清除
+            // 获取用户动态指定，由用户指定数据源，则应该有用户清除
             String dataSourceKey = DataSourceKey.get();
             if (StringUtil.isBlank(dataSourceKey)) {
-                //通过 @UseDataSource 或者 @Table(dataSource) 去获取
+                // 通过 @UseDataSource 或者 @Table(dataSource) 去获取
                 String configDataSourceKey = getConfigDataSourceKey(method, proxy);
                 if (StringUtil.isNotBlank(configDataSourceKey)) {
                     dataSourceKey = configDataSourceKey;
@@ -68,19 +67,19 @@ public class MapperInvocationHandler implements InvocationHandler {
                 }
             }
 
-            //最终通过数据源 自定义分片 策略去获取
+            // 最终通过数据源 自定义分片 策略去获取
             String shardingDataSourceKey = DataSourceKey.getByShardingStrategy(dataSourceKey, proxy, method, args);
             if (shardingDataSourceKey != null && !shardingDataSourceKey.equals(dataSourceKey)) {
                 DataSourceKey.use(shardingDataSourceKey);
                 needClearDsKey = true;
             }
 
-            //优先获取用户自己配置的 dbType
+            // 优先获取用户自己配置的 dbType
             DbType dbType = DialectFactory.getHintDbType();
 
             if (dbType == null) {
                 if (shardingDataSourceKey != null && dataSource != null) {
-                    //使用最终分片获取数据源类型
+                    // 使用最终分片获取数据源类型
                     dbType = dataSource.getDbType(shardingDataSourceKey);
                 }
 
@@ -88,7 +87,7 @@ public class MapperInvocationHandler implements InvocationHandler {
                     dbType = dataSource.getDbType(dataSourceKey);
                 }
 
-                //设置了dbTypeGlobal，那么就使用全局的dbTypeGlobal
+                // 设置了dbTypeGlobal，那么就使用全局的dbTypeGlobal
                 if (dbType == null) {
                     dbType = DialectFactory.getGlobalDbType();
                 }

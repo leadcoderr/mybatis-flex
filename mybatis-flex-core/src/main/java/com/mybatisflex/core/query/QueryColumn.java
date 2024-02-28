@@ -995,7 +995,7 @@ public class QueryColumn implements CloneSupport<QueryColumn>, Conditional<Query
 
 
     QueryTable getSelectTable(List<QueryTable> queryTables, QueryTable selfTable) {
-        //未查询任何表
+        // 未查询任何表
         if (queryTables == null || queryTables.isEmpty()) {
             return null;
         }
@@ -1005,7 +1005,7 @@ public class QueryColumn implements CloneSupport<QueryColumn>, Conditional<Query
         }
 
         if (queryTables.size() == 1 && queryTables.get(0).isSameTable(selfTable)) {
-            //ignore table
+            // ignore table
             return null;
         }
 

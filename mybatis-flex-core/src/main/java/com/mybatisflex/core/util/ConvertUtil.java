@@ -111,7 +111,7 @@ public class ConvertUtil {
     }
 
 
-    //Boolean.TYPE, Character.TYPE, Byte.TYPE, Short.TYPE, Integer.TYPE, Long.TYPE, Float.TYPE, Double.TYPE, Void.TYPE
+    // Boolean.TYPE, Character.TYPE, Byte.TYPE, Short.TYPE, Integer.TYPE, Long.TYPE, Float.TYPE, Double.TYPE, Void.TYPE
     public static Object getPrimitiveDefaultValue(Class<?> paraClass) {
         if (paraClass == int.class || paraClass == long.class || paraClass == float.class || paraClass == double.class) {
             return 0;

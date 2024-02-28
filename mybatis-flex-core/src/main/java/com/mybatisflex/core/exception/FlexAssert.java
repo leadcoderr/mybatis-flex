@@ -26,7 +26,6 @@ import java.util.Map;
  *
  * @author 王帅
  * @author michael
- *
  * @since 2023-07-08
  */
 public final class FlexAssert {

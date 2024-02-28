@@ -37,7 +37,7 @@ import static com.mybatisflex.core.constant.SqlConsts.*;
  */
 public class OracleDialect extends CommonsDialectImpl {
 
-    //https://docs.oracle.com/cd/A97630_01/appdev.920/a42525/apb.htm
+    // https://docs.oracle.com/cd/A97630_01/appdev.920/a42525/apb.htm
     public static final Set<String> keywords = CollectionUtil.newHashSet(
         "ACCESS", "ELSE", "MODIFY", "START", "ADD", "EXCLUSIVE", "NOAUDIT", "SELECT",
         "ALL", "EXISTS", "NOCOMPRESS", "SESSION", "ALTER", "FILE", "NOT", "SET", "AND", "FLOAT",
@@ -128,7 +128,7 @@ public class OracleDialect extends CommonsDialectImpl {
             StringJoiner stringJoiner = new StringJoiner(DELIMITER, BRACKET_LEFT, BRACKET_RIGHT);
             for (String insertColumn : insertColumns) {
                 if (onInsertColumns != null && onInsertColumns.containsKey(insertColumn)) {
-                    //直接读取 onInsert 配置的值，而不用 "?" 代替
+                    // 直接读取 onInsert 配置的值，而不用 "?" 代替
                     stringJoiner.add(onInsertColumns.get(insertColumn));
                 } else {
                     stringJoiner.add(PLACEHOLDER);
@@ -170,7 +170,7 @@ public class OracleDialect extends CommonsDialectImpl {
 
         String table = getRealTable(tableName);
         String tableNameWrap = StringUtil.isNotBlank(schema)
-            ? wrap(getRealSchema(schema,table)) + REFERENCE + wrap(table)
+            ? wrap(getRealSchema(schema, table)) + REFERENCE + wrap(table)
             : wrap(table);
         String questionStrings = SqlUtil.buildSqlParamPlaceholder(attrs.size());
 

@@ -40,9 +40,9 @@ public class FlexIDKeyGenerator implements IKeyGenerator {
     private static final long INITIAL_TIMESTAMP = 1680411660000L;
     private static final long MAX_CLOCK_SEQ = 99;
 
-    private long lastTimeMillis = 0;//最后一次生成 ID 的时间
-    private long clockSeq = 0;      //时间序列
-    private long workId = 1;        //机器 ID
+    private long lastTimeMillis = 0;// 最后一次生成 ID 的时间
+    private long clockSeq = 0;      // 时间序列
+    private long workId = 1;        // 机器 ID
 
     public FlexIDKeyGenerator() {
     }
@@ -58,7 +58,7 @@ public class FlexIDKeyGenerator implements IKeyGenerator {
 
     private synchronized long nextId() {
 
-        //当前时间
+        // 当前时间
         long currentTimeMillis = System.currentTimeMillis();
 
         if (currentTimeMillis == lastTimeMillis) {
@@ -69,7 +69,7 @@ public class FlexIDKeyGenerator implements IKeyGenerator {
             }
         }
 
-        //出现时间回拨
+        // 出现时间回拨
         else if (currentTimeMillis < lastTimeMillis) {
             currentTimeMillis = lastTimeMillis;
             clockSeq++;
@@ -86,7 +86,7 @@ public class FlexIDKeyGenerator implements IKeyGenerator {
 
         long diffTimeMillis = currentTimeMillis - INITIAL_TIMESTAMP;
 
-        //ID组成：时间（7+）| 毫秒内的时间自增 （00~99：2）| 机器ID（00 ~ 99：2）| 随机数（00~99：2）
+        // ID组成：时间（7+）| 毫秒内的时间自增 （00~99：2）| 机器ID（00 ~ 99：2）| 随机数（00~99：2）
         return diffTimeMillis * 1000000 + clockSeq * 10000 + workId * 100 + getRandomInt();
     }
 

@@ -56,7 +56,7 @@ public class RawQueryCondition extends QueryCondition {
     public String toSql(List<QueryTable> queryTables, IDialect dialect) {
         StringBuilder sql = new StringBuilder();
 
-        //检测是否生效
+        // 检测是否生效
         if (checkEffective()) {
             QueryCondition prevEffectiveCondition = getPrevEffectiveCondition();
             if (prevEffectiveCondition != null && this.connector != null) {

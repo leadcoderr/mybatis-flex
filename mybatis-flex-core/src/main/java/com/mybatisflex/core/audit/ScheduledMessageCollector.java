@@ -42,7 +42,7 @@ public class ScheduledMessageCollector extends AbstractMessageCollector {
     }
 
     public void release() {
-        doSendMessages(); //clear the messages
+        doSendMessages(); // clear the messages
         scheduler.shutdown();
     }
 

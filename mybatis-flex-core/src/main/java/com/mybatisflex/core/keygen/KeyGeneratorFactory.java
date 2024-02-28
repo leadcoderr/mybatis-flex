@@ -49,7 +49,7 @@ public class KeyGeneratorFactory {
      * @return 主键生成器
      */
     public static IKeyGenerator getKeyGenerator(String name) {
-        if (StringUtil.isBlank(name)){
+        if (StringUtil.isBlank(name)) {
             throw FlexExceptions.wrap(LocalizedFormats.KEY_GENERATOR_BLANK);
         }
         return KEY_GENERATOR_MAP.get(name.trim());

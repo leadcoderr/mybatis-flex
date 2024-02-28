@@ -164,7 +164,6 @@ public interface LimitOffsetProcessor {
 
 
     /**
-     *
      * SINODB 的处理器
      * 适合  {@link DbType#SINODB}
      */
@@ -215,7 +214,7 @@ public interface LimitOffsetProcessor {
      */
     LimitOffsetProcessor SYBASE = (dialect, sql, queryWrapper, limitRows, limitOffset) -> {
         if (limitRows != null && limitOffset != null) {
-            //SELECT TOP 1 START AT 3 * FROM
+            // SELECT TOP 1 START AT 3 * FROM
             sql.insert(6, TOP + limitRows + START_AT + (limitOffset + 1));
         } else if (limitRows != null) {
             sql.insert(6, TOP + limitRows);

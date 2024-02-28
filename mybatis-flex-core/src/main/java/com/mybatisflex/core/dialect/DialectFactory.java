@@ -16,17 +16,17 @@
 package com.mybatisflex.core.dialect;
 
 
-import java.util.EnumMap;
-import java.util.Map;
-
-import com.mybatisflex.core.exception.MybatisFlexException;
-import org.apache.ibatis.util.MapUtil;
 import com.mybatisflex.core.FlexGlobalConfig;
 import com.mybatisflex.core.dialect.impl.CommonsDialectImpl;
 import com.mybatisflex.core.dialect.impl.DB2105Dialect;
 import com.mybatisflex.core.dialect.impl.DmDialect;
 import com.mybatisflex.core.dialect.impl.OracleDialect;
+import com.mybatisflex.core.exception.MybatisFlexException;
 import com.mybatisflex.core.util.ObjectUtil;
+import org.apache.ibatis.util.MapUtil;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 /**
  * 方言工厂类，用于创建方言
@@ -47,7 +47,7 @@ public class DialectFactory {
      * 通过设置当前线程的数据库类型，以达到在代码执行时随时切换方言的功能
      */
     private static final ThreadLocal<DbType> dbTypeThreadLocal = new ThreadLocal<>();
-    private static  DbType dbTypeGlobal  = null ;
+    private static DbType dbTypeGlobal = null;
 
 
     /**
@@ -83,11 +83,11 @@ public class DialectFactory {
     }
 
     public static void setGlobalDbType(DbType dbType) {
-        if(dbTypeGlobal == null&&dbType!=null){
-            dbTypeGlobal = dbType ;
-        }else if(dbTypeGlobal != null){
+        if (dbTypeGlobal == null && dbType != null) {
+            dbTypeGlobal = dbType;
+        } else if (dbTypeGlobal != null) {
             throw new MybatisFlexException("dbTypeGlobal is only set once");
-        }else if(dbType==null){
+        } else if (dbType == null) {
             throw new MybatisFlexException("dbType can not be null");
         }
     }

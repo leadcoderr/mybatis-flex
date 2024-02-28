@@ -128,14 +128,14 @@ public class FlexSqlSessionFactoryBuilder extends SqlSessionFactoryBuilder {
         String environmentId = configuration.getEnvironment().getId();
 
         FlexGlobalConfig globalConfig = FlexGlobalConfig.getConfig(environmentId);
-        if (globalConfig == null){
+        if (globalConfig == null) {
             globalConfig = new FlexGlobalConfig();
         }
 
         globalConfig.setSqlSessionFactory(sessionFactory);
         globalConfig.setConfiguration(configuration);
 
-        FlexGlobalConfig.setConfig(environmentId, globalConfig,true);
+        FlexGlobalConfig.setConfig(environmentId, globalConfig, true);
     }
 
 

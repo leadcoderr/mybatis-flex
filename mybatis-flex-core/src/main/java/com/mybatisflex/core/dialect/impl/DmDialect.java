@@ -23,7 +23,7 @@ import java.util.Set;
 
 public class DmDialect extends CommonsDialectImpl {
 
-    //https://docs.oracle.com/cd/A97630_01/appdev.920/a42525/apb.htm
+    // https://docs.oracle.com/cd/A97630_01/appdev.920/a42525/apb.htm
     public static final Set<String> keywords = CollectionUtil.newHashSet(
         "ACCESS", "ELSE", "MODIFY", "START", "ADD", "EXCLUSIVE", "NOAUDIT", "SELECT",
         "ALL", "EXISTS", "NOCOMPRESS", "SESSION", "ALTER", "FILE", "NOT", "SET", "AND", "FLOAT",
@@ -73,12 +73,12 @@ public class DmDialect extends CommonsDialectImpl {
     );
 
     public DmDialect() {
-        //达梦 默认情况下，是支持 MySQL 的分页语法的
+        // 达梦 默认情况下，是支持 MySQL 的分页语法的
         this(LimitOffsetProcessor.MYSQL);
     }
 
     public DmDialect(LimitOffsetProcessor limitOffsetProcessor) {
-        //只有以上的关键字时，会添加 "" 包裹
+        // 只有以上的关键字时，会添加 "" 包裹
         this(new KeywordWrap(false, false, keywords, "\"", "\""), limitOffsetProcessor);
     }
 

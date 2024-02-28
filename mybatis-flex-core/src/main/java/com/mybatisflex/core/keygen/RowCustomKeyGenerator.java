@@ -72,7 +72,7 @@ public class RowCustomKeyGenerator implements KeyGenerator {
 
     @Override
     public void processAfter(Executor executor, MappedStatement ms, Statement stmt, Object parameter) {
-        //do nothing
+        // do nothing
     }
 
 }
